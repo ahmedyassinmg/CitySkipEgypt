@@ -6,14 +6,136 @@
     <title>سيتي سكيب مصر - أكبر معرض عقارات في مصر</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+
+        :root {
+            --primary-color: #e88c23;
+            --secondary-color: #333;
+            --dark-gray: #444;
+            --light-gray: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .section {
+            scroll-margin-top: 100px;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .primary-btn {
+            background-color: var(--primary-color);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .primary-btn:hover {
+            background-color: #d67d18;
+        }
+
+        .outline-btn {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            transition: all 0.3s;
+        }
+
+        .outline-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .stat-card {
+            border-left: 1px solid #ddd;
+        }
+
+        .stat-card:last-child {
+            border-left: none;
+        }
+
+        .hero {
+            background-image: url('https://www.cityscape-events.com/content/dam/esa/emea/city-scape/egypt/en/components/teaser/t4-teaser-detailed/t4-sustainability-background-image.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-overlay {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .stat-card {
+                border-left: none;
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .stat-card:last-child {
+                border-bottom: none;
+            }
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            right: 0;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+    </style>
 </head>
 <body class="bg-white">
     <!-- Top Bar -->
     <div class="bg-gray-700 text-white py-2 px-4 flex justify-end items-center">
         <div>informa</div>
     </div>
-    
+
     <!-- Secondary Nav -->
     <div class="bg-yellow-600 text-white py-2 px-4 flex justify-between items-center">
         <div class="flex">
@@ -24,9 +146,9 @@
             <a href="#register" class="primary-btn px-4 py-1 rounded">CITYSCAPE EVENTS</a>
         </div>
     </div>
-    
+
     <!-- Main Navigation -->
-    <nav class="bg-white py-4 px-4 border-b shadow-sm sticky top-0 z-50">
+    <nav class="bg-white py-4 px-4 border-b shadow-sm">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center space-x-4">
                 <div class="dropdown relative">
@@ -35,7 +157,7 @@
                 <a href="#register" class="outline-btn px-6 py-2 rounded text-sm">شارك كعارض</a>
                 <a href="#register" class="primary-btn px-6 py-2 rounded text-sm">قم بالزيارة</a>
             </div>
-            
+
             <div class="hidden md:flex space-x-6 rtl-space-x-reverse">
                 <div class="dropdown relative group">
                     <button class="nav-link text-gray-700 hover:text-yellow-600 flex items-center">
@@ -62,14 +184,7 @@
                     </button>
                 </div>
             </div>
-            
-            <!-- Mobile menu button -->
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-gray-700 hover:text-yellow-600 focus:outline-none">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-            </div>
-            
+
             <div>
                 <div class="text-3xl font-bold">
                     <span class="text-gray-800">Cityscape</span>
@@ -77,39 +192,29 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="md:hidden mt-4 hidden">
-            <div class="flex flex-col space-y-4 py-2">
-                <a href="#about" class="text-gray-700 hover:text-yellow-600 py-2">عن المعرض</a>
-                <a href="#program" class="text-gray-700 hover:text-yellow-600 py-2">المحتوى والبرامج</a>
-                <a href="#exhibitors" class="text-gray-700 hover:text-yellow-600 py-2">العارضون</a>
-                <a href="#visitors" class="text-gray-700 hover:text-yellow-600 py-2">الزوار</a>
-            </div>
-        </div>
     </nav>
-    
+
     <!-- Hero Section -->
     <section id="home" class="hero relative">
         <div class="hero-overlay py-20 md:py-32">
             <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 px-4">
                 <div class="bg-white p-8 rounded-lg">
                     <h1 class="text-4xl font-bold text-center mb-6">سيتي سكيب</h1>
-                    
+
                     <div class="text-center">
                         <p class="text-yellow-600 mb-2">مواعيد المعرض</p>
                         <p class="text-xl mb-4">من 24 إلى 27 سبتمبر 2025</p>
-                        
+
                         <p class="text-yellow-600 mb-2">مكان المعرض</p>
                         <p class="text-xl mb-8">مركز مصر للمعارض الدولية (EIEC)</p>
-                        
+
                         <div class="flex justify-center space-x-4 rtl-space-x-reverse">
                             <a href="#register" class="outline-btn px-6 py-2 rounded">شارك كعارض</a>
                             <a href="#register" class="primary-btn px-6 py-2 rounded">قم بالزيارة</a>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="flex flex-col justify-center">
                     <div class="text-white">
                         <h2 class="text-4xl md:text-5xl font-bold mb-4">اكتشف منزل أحلامك</h2>
@@ -119,16 +224,16 @@
             </div>
         </div>
     </section>
-    
+
     <!-- Sponsorship Banner -->
     <section class="bg-gray-100 py-6 text-center">
         <div class="container mx-auto">
             <p class="text-xl text-gray-700">يقام تحت رعاية وزارة الإسكان والمرافق والمجتمعات العمرانية</p>
         </div>
     </section>
-    
+
     <!-- Features Section -->
-    <section id="about" class="section py-16 bg-white">
+    <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center mb-16">
                 <div class="text-right mb-8 md:mb-0">
@@ -139,677 +244,816 @@
                     <a href="#register" class="primary-btn px-8 py-3 rounded font-medium">قم بزيارة المعرض</a>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div class="flex flex-col md:flex-row items-start">
                     <div class="w-20 h-20 flex-shrink-0 bg-yellow-50 rounded-full flex items-center justify-center mb-4 md:mb-0 md:ml-4">
-                        <i class="fas fa-building text-yellow-500 text-2xl"></i>
+                        <img src="https://www.cityscape-events.com/content/dam/esa/emea/city-scape/egypt/en/components/icons/CSC25_847_Icons-10.png" alt="Icon" class="w-10 h-10">
                     </div>
                     <div>
                         <h3 class="text-xl font-bold mb-4">استكشف الفرص في سوق العقارات المتطور في مصر</h3>
-                        <p class="text-gray-600">اكتشف أحدث المشاريع العقارية وفرص الاستثمار في السوق المصري المتنامي بسرعة.</p>
                     </div>
                 </div>
-                
+
                 <div class="flex flex-col md:flex-row items-start">
                     <div class="w-20 h-20 flex-shrink-0 bg-yellow-50 rounded-full flex items-center justify-center mb-4 md:mb-0 md:ml-4">
-                        <i class="fas fa-handshake text-yellow-500 text-2xl"></i>
+                        <img src="https://www.cityscape-events.com/content/dam/esa/emea/city-scape/egypt/en/components/icons/CSC25_847_Icons-05.png" alt="Icon" class="w-10 h-10">
                     </div>
                     <div>
                         <h3 class="text-xl font-bold mb-4">تواصل مع الخبراء والمطورين والمستثمرين</h3>
-                        <p class="text-gray-600">التقي وتواصل مع أهم الشخصيات في قطاع العقارات وابني علاقات مهنية قيمة.</p>
                     </div>
                 </div>
-                
+
                 <div class="flex flex-col md:flex-row items-start">
                     <div class="w-20 h-20 flex-shrink-0 bg-yellow-50 rounded-full flex items-center justify-center mb-4 md:mb-0 md:ml-4">
-                        <i class="fas fa-chart-line text-yellow-500 text-2xl"></i>
+                        <img src="https://www.cityscape-events.com/content/dam/esa/emea/city-scape/egypt/en/components/icons/CSC25_847_Icons-02.png" alt="Icon" class="w-10 h-10">
                     </div>
                     <div>
                         <h3 class="text-xl font-bold mb-4">تابع أحدث اتجاهات وابتكارات العقارات</h3>
-                        <p class="text-gray-600">تعرف على أحدث الاتجاهات والتقنيات والابتكارات التي تشكل مستقبل القطاع العقاري.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
     <!-- Statistics Section -->
-    <section id="statistics" class="section py-16 bg-gray-100">
+    <section class="py-16 bg-gray-100">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
                 <h4 class="text-xl text-yellow-600 mb-2">الإحصائيات السنوية</h4>
                 <h2 class="text-4xl font-bold mb-4">معرض سيتي سكيب في أرقام</h2>
-                <p class="text-gray-600 max-w-3xl mx-auto">يعد معرض سيتي سكيب مصر أحد أهم المعارض العقارية في المنطقة، حيث يجمع بين كبار المطورين والمستثمرين والمشترين المحتملين تحت سقف واحد.</p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div class="stat-card flex flex-col items-center bg-white p-8 rounded shadow-sm">
-                    <h2 class="text-5xl font-bold text-blue-600 mb-2 counter" data-target="14">0</h2>
+                    <h2 class="text-5xl font-bold text-blue-600 mb-2">14th</h2>
                     <p class="text-gray-600">النسخة</p>
                 </div>
-                
+
                 <div class="stat-card flex flex-col items-center bg-white p-8 rounded shadow-sm">
-                    <h2 class="text-5xl font-bold text-blue-600 mb-2 counter" data-target="40000">0</h2>
+                    <h2 class="text-5xl font-bold text-blue-600 mb-2">+40000</h2>
                     <p class="text-gray-600">زائر</p>
                 </div>
-                
+
                 <div class="stat-card flex flex-col items-center bg-white p-8 rounded shadow-sm">
-                    <h2 class="text-5xl font-bold text-blue-600 mb-2 counter" data-target="80">0</h2>
+                    <h2 class="text-5xl font-bold text-blue-600 mb-2">+80</h2>
                     <p class="text-gray-600">مطور عقاري</p>
                 </div>
-                
+
                 <div class="stat-card flex flex-col items-center bg-white p-8 rounded shadow-sm">
-                    <h2 class="text-5xl font-bold text-blue-600 mb-2 counter" data-target="150">0</h2>
-                    <p class="text-gray-600">مشروع معروض</p>
+                    <h2 class="text-5xl font-bold text-blue-600 mb-2">+1000</h2>
+                    <p class="text-gray-600">مشروع</p>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Featured Projects -->
-    <section id="projects" class="section py-16 bg-white">
+
+    <!-- Attendees Section -->
+    <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
-                <h4 class="text-xl text-yellow-600 mb-2">مشاريع مميزة</h4>
-                <h2 class="text-4xl font-bold mb-4 section-title">اكتشف أحدث المشاريع العقارية</h2>
-                <p class="text-gray-600 max-w-3xl mx-auto mt-8">تعرف على أبرز المشاريع العقارية التي سيتم عرضها في معرض سيتي سكيب مصر القادم من أهم المطورين العقاريين.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="property-card rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://pixabay.com/get/g5407022777233dc775c1320aaa382473b9c34b246d0644169c757780735322c4fe2c1a815d2721e54c5fda28bbce5c18_1280.jpg" alt="مشروع سكني فاخر" class="w-full h-full object-cover">
-                        <div class="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm">سكني</div>
+                <h2 class="text-4xl font-bold mb-8">من يحضر سيتي سكيب مصر؟</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div class="border rounded-lg p-6 hover:shadow-md transition">
+                        <i class="fas fa-home text-4xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">مشترو المنازل</h3>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">نيو هايتس القاهرة الجديدة</h3>
-                        <p class="text-gray-600 mb-4">مجمع سكني فاخر يقع في قلب القاهرة الجديدة، يوفر شقق وفيلات بإطلالات رائعة</p>
-                        <div class="flex justify-between items-center">
-                            <div class="text-yellow-600 font-bold">7.5 مليون جنيه</div>
-                            <a href="#" class="text-blue-600 hover:underline">المزيد من التفاصيل</a>
-                        </div>
+
+                    <div class="border rounded-lg p-6 hover:shadow-md transition">
+                        <i class="fas fa-chart-line text-4xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">المستثمرون</h3>
                     </div>
-                </div>
-                
-                <div class="property-card rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://pixabay.com/get/g7f435c7ecb57758e5bed9766b986b0a7d1f999e244f6023787a78eb477e64259a5dd0e4d382bc0e60c689dbfb39e25353d22993d67fa48ff8a506671ae165ab3_1280.jpg" alt="مشروع تجاري" class="w-full h-full object-cover">
-                        <div class="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm">تجاري</div>
+
+                    <div class="border rounded-lg p-6 hover:shadow-md transition">
+                        <i class="fas fa-landmark text-4xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">الحكومة</h3>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">الأعمال المركزي ٦ أكتوبر</h3>
-                        <p class="text-gray-600 mb-4">مركز أعمال متكامل في مدينة ٦ أكتوبر يوفر مكاتب ومساحات تجارية متنوعة</p>
-                        <div class="flex justify-between items-center">
-                            <div class="text-yellow-600 font-bold">5.2 مليون جنيه</div>
-                            <a href="#" class="text-blue-600 hover:underline">المزيد من التفاصيل</a>
-                        </div>
+
+                    <div class="border rounded-lg p-6 hover:shadow-md transition">
+                        <i class="fas fa-building text-4xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">المطورون</h3>
                     </div>
-                </div>
-                
-                <div class="property-card rounded-lg overflow-hidden shadow-md">
-                    <div class="relative h-64 overflow-hidden">
-                        <img src="https://pixabay.com/get/gb622ea4de83f198cf4fc648d4b518c1e09f8aa6a08121608a17ec0df8b4ab0c62a56e14e1aeb69cc10b96c7e16d6dac954016946605472e30ebfe6fb23836038_1280.jpg" alt="ساحل مصري" class="w-full h-full object-cover">
-                        <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm">ساحلي</div>
+
+                    <div class="border rounded-lg p-6 hover:shadow-md transition">
+                        <i class="fas fa-couch text-4xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">مصممو الديكور الداخلي</h3>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">بلو باي الساحل الشمالي</h3>
-                        <p class="text-gray-600 mb-4">منتجع سياحي راقي على شواطئ الساحل الشمالي مع شاليهات وفيلات فاخرة</p>
-                        <div class="flex justify-between items-center">
-                            <div class="text-yellow-600 font-bold">4.8 مليون جنيه</div>
-                            <a href="#" class="text-blue-600 hover:underline">المزيد من التفاصيل</a>
-                        </div>
+
+                    <div class="border rounded-lg p-6 hover:shadow-md transition">
+                        <i class="fas fa-drafting-compass text-4xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">المهندسون المعماريون</h3>
+                    </div>
+
+                    <div class="border rounded-lg p-6 hover:shadow-md transition">
+                        <i class="fas fa-laptop-code text-4xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">شركات PROPTECH الناشئة</h3>
+                    </div>
+
+                    <div class="border rounded-lg p-6 hover:shadow-md transition">
+                        <i class="fas fa-users text-4xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold">الوكلاء العقاريون</h3>
                     </div>
                 </div>
-            </div>
-            
-            <div class="text-center mt-12">
-                <a href="#register" class="outline-btn px-8 py-3 rounded">عرض جميع المشاريع</a>
             </div>
         </div>
     </section>
-    
-    <!-- Exhibition Program -->
-    <section id="program" class="section py-16 bg-gray-100">
+
+    <!-- Sustainability Section -->
+    <section class="py-16 bg-gray-800 text-white" style="background-image: url('https://www.cityscape-events.com/content/dam/esa/emea/city-scape/egypt/en/components/teaser/t4-teaser-detailed/t4-sustainability-background-image.jpg'); background-size: cover; background-position: center;">
+        <div style="background: rgba(0,0,0,0.7);" class="p-8">
+            <div class="container mx-auto px-4">
+                <div class="max-w-2xl">
+                    <h2 class="text-4xl font-bold mb-6">الاستدامة</h2>
+                    <p class="text-xl mb-8">إحداث تغيير دائم من أجل مستقبل أنظف وأكثر استدامة.</p>
+                    <a href="#" class="primary-btn px-8 py-3 rounded">اكتشف المزيد</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conference Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold mb-12 text-center">ندوات ومؤتمر سيتي سكيب</h2>
+
+            <div class="bg-gray-100 rounded-lg overflow-hidden shadow-md">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="bg-gray-800 p-8 flex items-center justify-center">
+                        <h3 class="text-3xl font-bold text-white">مؤتمر سيتي سكيب</h3>
+                    </div>
+                    <div class="p-8">
+                        <h4 class="text-2xl font-bold mb-4">قادة الفكر والخبراء</h4>
+                        <p class="mb-6">استمع إلى أبرز قادة الفكر والخبراء في مجال العقارات والتطوير الحضري في مصر والمنطقة.</p>
+                        <ul class="mb-6">
+                            <li class="mb-2 flex items-center">
+                                <i class="fas fa-check text-yellow-500 ml-2"></i>
+                                <span>جلسات نقاشية حول مستقبل العقارات</span>
+                            </li>
+                            <li class="mb-2 flex items-center">
+                                <i class="fas fa-check text-yellow-500 ml-2"></i>
+                                <span>عروض تقديمية من خبراء الصناعة</span>
+                            </li>
+                            <li class="mb-2 flex items-center">
+                                <i class="fas fa-check text-yellow-500 ml-2"></i>
+                                <span>فرص للتواصل مع كبار المسؤولين والمستثمرين</span>
+                            </li>
+                        </ul>
+                        <a href="#register" class="primary-btn px-6 py-2 rounded">سجل الآن</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exhibitors Section -->
+    <section id="exhibitors" class="section py-16 bg-gray-100">
         <div class="container mx-auto px-4">
             <div class="text-center mb-12">
-                <h4 class="text-xl text-yellow-600 mb-2">برنامج المعرض</h4>
-                <h2 class="text-4xl font-bold mb-4 section-title">فعاليات وأنشطة متنوعة</h2>
-                <p class="text-gray-600 max-w-3xl mx-auto mt-8">يتضمن معرض سيتي سكيب مصر مجموعة متنوعة من الفعاليات والندوات وورش العمل التي تناقش أهم القضايا في قطاع العقارات.</p>
+                <h2 class="text-4xl font-bold mb-6">العارضون</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">انضم إلى كبار المطورين العقاريين والشركات المشاركة في أكبر حدث عقاري في مصر</p>
             </div>
-            
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                <div class="flex flex-wrap">
-                    <button class="tab-btn active flex-1 py-4 px-6 text-center" data-tab="day1">اليوم الأول</button>
-                    <button class="tab-btn flex-1 py-4 px-6 text-center" data-tab="day2">اليوم الثاني</button>
-                    <button class="tab-btn flex-1 py-4 px-6 text-center" data-tab="day3">اليوم الثالث</button>
-                    <button class="tab-btn flex-1 py-4 px-6 text-center" data-tab="day4">اليوم الرابع</button>
-                </div>
-                
-                <div class="p-6">
-                    <div id="day1" class="tab-content active">
-                        <h3 class="text-2xl font-bold mb-6">24 سبتمبر 2025</h3>
-                        
-                        <div class="mb-6 pb-6 border-b">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">10:00 - 11:30</span>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">القاعة الرئيسية</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">الافتتاح الرسمي للمعرض</h4>
-                            <p class="text-gray-600">الافتتاح الرسمي لمعرض سيتي سكيب مصر بحضور وزير الإسكان والمرافق والمجتمعات العمرانية وكبار المسؤولين والمطورين.</p>
-                        </div>
-                        
-                        <div class="mb-6 pb-6 border-b">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">12:00 - 13:30</span>
-                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">قاعة المؤتمرات</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">ندوة: مستقبل العقارات في مصر</h4>
-                            <p class="text-gray-600">نظرة مستقبلية لسوق العقارات المصري والفرص المتاحة للمستثمرين المحليين والدوليين.</p>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">14:30 - 16:00</span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">قاعة الندوات</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">ورشة عمل: الاستثمار العقاري الناجح</h4>
-                            <p class="text-gray-600">استراتيجيات الاستثمار العقاري الناجحة وكيفية تقييم المشاريع العقارية للحصول على أفضل عائد استثماري.</p>
-                        </div>
-                    </div>
-                    
-                    <div id="day2" class="tab-content">
-                        <h3 class="text-2xl font-bold mb-6">25 سبتمبر 2025</h3>
-                        
-                        <div class="mb-6 pb-6 border-b">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">10:00 - 11:30</span>
-                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">قاعة المؤتمرات</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">مؤتمر: المدن الذكية في مصر</h4>
-                            <p class="text-gray-600">نظرة شاملة على تطوير المدن الذكية في مصر والتقنيات الحديثة المستخدمة في بنائها.</p>
-                        </div>
-                        
-                        <div class="mb-6 pb-6 border-b">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">12:30 - 14:00</span>
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">القاعة الرئيسية</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">جلسة حوارية: التمويل العقاري</h4>
-                            <p class="text-gray-600">مناقشة حول أحدث التطورات في التمويل العقاري وبرامج الدعم المتاحة للمشترين.</p>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">15:00 - 16:30</span>
-                                <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">قاعة الندوات</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">ندوة: التصميم المعماري المستدام</h4>
-                            <p class="text-gray-600">أحدث اتجاهات التصميم المعماري المستدام وتطبيقاته في المشاريع العقارية المصرية.</p>
-                        </div>
-                    </div>
-                    
-                    <div id="day3" class="tab-content">
-                        <h3 class="text-2xl font-bold mb-6">26 سبتمبر 2025</h3>
-                        
-                        <div class="mb-6 pb-6 border-b">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">10:00 - 11:30</span>
-                                <span class="bg-pink-100 text-pink-800 px-3 py-1 rounded-full text-sm">قاعة المؤتمرات</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">مؤتمر: السياحة العقارية</h4>
-                            <p class="text-gray-600">فرص الاستثمار في المنتجعات السياحية والشاليهات على الساحلين الشمالي والجنوبي.</p>
-                        </div>
-                        
-                        <div class="mb-6 pb-6 border-b">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">12:30 - 14:00</span>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">القاعة الرئيسية</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">جلسة حوارية: العقارات التجارية</h4>
-                            <p class="text-gray-600">تحليل لسوق العقارات التجارية والمكتبية في مصر وأهم اتجاهاته المستقبلية.</p>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">15:00 - 16:30</span>
-                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm">قاعة الندوات</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">ورشة عمل: التسويق العقاري الرقمي</h4>
-                            <p class="text-gray-600">استراتيجيات وأدوات التسويق العقاري الرقمي وكيفية استخدامها لزيادة المبيعات.</p>
-                        </div>
-                    </div>
-                    
-                    <div id="day4" class="tab-content">
-                        <h3 class="text-2xl font-bold mb-6">27 سبتمبر 2025</h3>
-                        
-                        <div class="mb-6 pb-6 border-b">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">10:00 - 11:30</span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">قاعة المؤتمرات</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">مؤتمر: العقارات الخضراء والمستدامة</h4>
-                            <p class="text-gray-600">مستقبل البناء الأخضر في مصر وتأثيره على سوق العقارات والبيئة.</p>
-                        </div>
-                        
-                        <div class="mb-6 pb-6 border-b">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">12:30 - 14:00</span>
-                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm">القاعة الرئيسية</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">جلسة حوارية: القوانين والتشريعات العقارية</h4>
-                            <p class="text-gray-600">مناقشة أحدث القوانين والتشريعات المنظمة لسوق العقارات في مصر وتأثيرها على المستثمرين.</p>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-bold">15:00 - 16:30</span>
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm">قاعة الندوات</span>
-                            </div>
-                            <h4 class="text-xl font-bold mb-2">حفل ختام المعرض وتوزيع الجوائز</h4>
-                            <p class="text-gray-600">الاحتفال بختام المعرض وتوزيع جوائز سيتي سكيب للتميز العقاري على المشاريع والمطورين المتميزين.</p>
-                        </div>
-                    </div>
+
+            <div class="bg-white p-8 rounded-lg shadow-sm mb-8">
+                <h3 class="text-2xl font-bold mb-6">مزايا المشاركة كعارض</h3>
+                <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-yellow-500 mt-1 ml-2"></i>
+                        <span>عرض مشاريعك أمام أكثر من 40,000 زائر</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-yellow-500 mt-1 ml-2"></i>
+                        <span>التواصل المباشر مع المستثمرين والمشترين المحتملين</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-yellow-500 mt-1 ml-2"></i>
+                        <span>تعزيز مكانة علامتك التجارية في سوق العقارات</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-star text-yellow-500 mt-1 ml-2"></i>
+                        <span>الاستفادة من تغطية إعلامية واسعة للحدث</span>
+                    </li>
+                </ul>
+
+                <div class="mt-8 text-center">
+                    <a href="#register" class="outline-btn px-8 py-3 rounded">شارك كعارض</a>
                 </div>
             </div>
-        </div>
-    </section>
-    
-    <!-- Gallery Section -->
-    <section id="gallery" class="section py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h4 class="text-xl text-yellow-600 mb-2">معرض الصور</h4>
-                <h2 class="text-4xl font-bold mb-4 section-title">لمحات من المعرض السابق</h2>
-                <p class="text-gray-600 max-w-3xl mx-auto mt-8">صور من النسخة السابقة لمعرض سيتي سكيب مصر الذي شهد نجاحاً كبيراً ومشاركة واسعة من المطورين والزوار.</p>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="overflow-hidden rounded-lg h-48 md:h-64">
-                    <img src="https://pixabay.com/get/gda3b5e271dee18aaf733fa17c37f95e9b43eeebd8a1518ecd0b03d0bc15d6f5e5bd14b90cd5ae6faa8b8fc60bf36f5ff0fcb58a1ed7ffb36fa13cc3a3e4a6aa5_1280.jpg" alt="معرض سيتي سكيب" class="w-full h-full object-cover gallery-image">
-                </div>
-                <div class="overflow-hidden rounded-lg h-48 md:h-64">
-                    <img src="https://pixabay.com/get/gcf0af234a4ceb4c3a47bc589835654aeec3fcba97f9760c6ecdac563ba00fe89d8ae9b83c8ae624836b31a0efb91cbeeb52cc5c3d5cab3932670aa8fcb21efbc_1280.jpg" alt="معرض سيتي سكيب" class="w-full h-full object-cover gallery-image">
-                </div>
-                <div class="overflow-hidden rounded-lg h-48 md:h-64">
-                    <img src="https://pixabay.com/get/gd43093f9466d21e7e0ee88f4f8122128c45eae76e3311fa05e8275e1a8a3bc7695443850c6f060a7b57fe18ea3f2415a275a0d734cc3b8cb7840ea9135ed8469_1280.jpg" alt="معرض سيتي سكيب" class="w-full h-full object-cover gallery-image">
-                </div>
-                <div class="overflow-hidden rounded-lg h-48 md:h-64">
-                    <img src="https://pixabay.com/get/g0ef2265aae0eeb322e99311b552887ccc66f073daa5f14d585734544f16d00d3a49d5de94fff339bcb9e3705310e1cfb130ded74f6707acc5f82b069c5250e82_1280.jpg" alt="معرض سيتي سكيب" class="w-full h-full object-cover gallery-image">
-                </div>
-                <div class="overflow-hidden rounded-lg h-48 md:h-64">
-                    <img src="https://pixabay.com/get/g4853e742340c7fb95fe5a9f78907932c9ce3c7fecc7defb8674cb0104956d37ae9364f2fed8b348d7677e7bbc1e1637c901b0c59623417897c3981c658f6dcc4_1280.jpg" alt="معرض سيتي سكيب" class="w-full h-full object-cover gallery-image">
-                </div>
-                <div class="overflow-hidden rounded-lg h-48 md:h-64">
-                    <img src="https://pixabay.com/get/g7538f276dedeaba8da98dcfa34bdadee80f110de760094c7d841155a0c91170c36da99ea3d8c9ec93403e97c0d3401989fa2943973a91036f4638dd503464ffe_1280.jpg" alt="معرض سيتي سكيب" class="w-full h-full object-cover gallery-image">
-                </div>
-                <div class="overflow-hidden rounded-lg h-48 md:h-64">
-                    <img src="https://pixabay.com/get/g9e39a965bde86ca2480ef4e74c9593e7f101c20516ec1e06e4523cb508b57b763d1a3b6f639971db4b5cac4684c0a148f7762b37ca6614b31ccd05d577bcb983_1280.jpg" alt="معرض سيتي سكيب" class="w-full h-full object-cover gallery-image">
-                </div>
-                <div class="overflow-hidden rounded-lg h-48 md:h-64">
-                    <img src="https://pixabay.com/get/gaa0ffc1f7e48121c9c54672b869ec86d44f24b2671983b6ce9573235ab7075e32cd72a625313f2ef332f673228a0c78b643f2ec8f167125db3390af718eb872f_1280.jpg" alt="معرض سيتي سكيب" class="w-full h-full object-cover gallery-image">
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Registration Section -->
-    <section id="register" class="section py-16 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
-                <div>
-                    <h4 class="text-xl text-yellow-600 mb-2">التسجيل</h4>
-                    <h2 class="text-4xl font-bold mb-8 section-title">سجل الآن للحضور</h2>
-                    
-                    <p class="text-gray-600 my-8">احجز مكانك الآن في معرض سيتي سكيب مصر واستفد من الفرص الحصرية المتاحة للزوار المسجلين مسبقاً، بما في ذلك:</p>
-                    
-                    <ul class="mb-8">
-                        <li class="flex items-start mb-4">
-                            <div class="w-6 h-6 mt-1 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 ml-2">
-                                <i class="fas fa-check text-white text-sm"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold mb-1">دخول مجاني للمعرض</h3>
-                                <p class="text-gray-600">احصل على بطاقة دخول مجانية للمعرض طوال فترة إقامته</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <h3 class="text-2xl font-bold mb-4">باقات العارضين</h3>
+                    <p class="mb-6">نوفر مجموعة متنوعة من باقات العرض لتناسب احتياجات شركتك:</p>
+                    <ul class="mb-6">
+                        <li class="mb-3 pb-3 border-b">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg">المساحة المفتوحة</span>
+                                <span>ابتداءً من 9 متر مربع</span>
                             </div>
                         </li>
-                        <li class="flex items-start mb-4">
-                            <div class="w-6 h-6 mt-1 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 ml-2">
-                                <i class="fas fa-check text-white text-sm"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold mb-1">عروض حصرية</h3>
-                                <p class="text-gray-600">عروض وخصومات حصرية من المطورين العقاريين المشاركين</p>
+                        <li class="mb-3 pb-3 border-b">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg">الجناح الجاهز</span>
+                                <span>مع تجهيزات أساسية</span>
                             </div>
                         </li>
-                        <li class="flex items-start mb-4">
-                            <div class="w-6 h-6 mt-1 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 ml-2">
-                                <i class="fas fa-check text-white text-sm"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold mb-1">حضور الندوات</h3>
-                                <p class="text-gray-600">إمكانية حضور الندوات وورش العمل المختلفة المقامة على هامش المعرض</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="w-6 h-6 mt-1 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0 ml-2">
-                                <i class="fas fa-check text-white text-sm"></i>
-                            </div>
-                            <div>
-                                <h3 class="font-bold mb-1">تواصل مع المطورين</h3>
-                                <p class="text-gray-600">فرصة للتواصل المباشر مع كبار المطورين العقاريين والمستثمرين</p>
+                        <li class="mb-3 pb-3 border-b">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-lg">الرعاية</span>
+                                <span>مستويات متعددة</span>
                             </div>
                         </li>
                     </ul>
                 </div>
-                
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <h3 class="text-2xl font-bold mb-6">نموذج التسجيل</h3>
-                    
-                    <!-- نموذج تسجيل الزوار -->
-                    <form id="visitor-form" action="https://formsubmit.co/maysragroup44@gmail.com" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- إضافة حقل مخفي لتوجيه المستخدم لصفحة نجاح -->
-                        <input type="hidden" name="_next" value="http://localhost:5000/success">
-                        <!-- إضافة حقل مخفي لتعيين الموضوع -->
-                        <input type="hidden" name="_subject" value="تسجيل زائر جديد - سيتي سكيب مصر">
-                        <!-- منع الروبوتات -->
-                        <input type="hidden" name="_captcha" value="false">
-                        
-                        <div>
-                            <label class="block text-gray-700 mb-2">الاسم الكامل*</label>
-                            <input type="text" name="fullName" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <h3 class="text-2xl font-bold mb-4">الجدول الزمني للعارضين</h3>
+                    <ul class="mb-6">
+                        <li class="mb-4 flex items-start">
+                            <div class="w-20 flex-shrink-0 font-bold">التسجيل</div>
+                            <div>مفتوح الآن</div>
+                        </li>
+                        <li class="mb-4 flex items-start">
+                            <div class="w-20 flex-shrink-0 font-bold">الإعداد</div>
+                            <div>22-23 سبتمبر 2025</div>
+                        </li>
+                        <li class="mb-4 flex items-start">
+                            <div class="w-20 flex-shrink-0 font-bold">المعرض</div>
+                            <div>24-27 سبتمبر 2025</div>
+                        </li>
+                        <li class="mb-4 flex items-start">
+                            <div class="w-20 flex-shrink-0 font-bold">التفكيك</div>
+                            <div>28 سبتمبر 2025</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visitors Section -->
+    <section id="visitors" class="section py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-6">الزوار</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">اكتشف فرصًا استثمارية فريدة واطلع على أحدث المشاريع العقارية في مصر</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-gray-100 p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-building text-yellow-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">استكشف أفضل المشاريع</h3>
+                    <p>تعرف على أحدث المشاريع السكنية والتجارية من كبار المطورين في مصر.</p>
+                </div>
+
+                <div class="bg-gray-100 p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-handshake text-yellow-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">عروض وخصومات حصرية</h3>
+                    <p>استفد من عروض وخصومات حصرية متاحة فقط خلال أيام المعرض.</p>
+                </div>
+
+                <div class="bg-gray-100 p-8 rounded-lg">
+                    <div class="w-16 h-16 bg-yellow-50 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-lightbulb text-yellow-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">المعرفة والاستشارات</h3>
+                    <p>احصل على استشارات مجانية من خبراء العقارات والتمويل والاستثمار.</p>
+                </div>
+            </div>
+
+            <div class="bg-yellow-50 p-8 rounded-lg shadow-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">معلومات الزيارة</h3>
+                        <ul class="mb-6">
+                            <li class="mb-4 flex items-start">
+                                <i class="fas fa-map-marker-alt text-yellow-500 ml-4 mt-1"></i>
+                                <div>
+                                    <span class="font-bold block">الموقع:</span>
+                                    <span>مركز مصر للمعارض الدولية (EIEC)</span>
+                                </div>
+                            </li>
+                            <li class="mb-4 flex items-start">
+                                <i class="fas fa-calendar-alt text-yellow-500 ml-4 mt-1"></i>
+                                <div>
+                                    <span class="font-bold block">التاريخ:</span>
+                                    <span>24-27 سبتمبر 2025</span>
+                                </div>
+                            </li>
+                            <li class="mb-4 flex items-start">
+                                <i class="fas fa-clock text-yellow-500 ml-4 mt-1"></i>
+                                <div>
+                                    <span class="font-bold block">ساعات العمل:</span>
+                                    <span>من 10 صباحًا حتى 10 مساءً</span>
+                                </div>
+                            </li>
+                            <li class="mb-4 flex items-start">
+                                <i class="fas fa-ticket-alt text-yellow-500 ml-4 mt-1"></i>
+                                <div>
+                                    <span class="font-bold block">التذاكر:</span>
+                                    <span>التسجيل المسبق مجاني. التذاكر عند المدخل: 100 جنيه مصري</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">مميزات الزيارة</h3>
+                        <ul class="mb-6">
+                            <li class="mb-3 flex items-center">
+                                <i class="fas fa-check-circle text-yellow-500 ml-2"></i>
+                                <span>أكثر من 1000 مشروع عقاري</span>
+                            </li>
+                            <li class="mb-3 flex items-center">
+                                <i class="fas fa-check-circle text-yellow-500 ml-2"></i>
+                                <span>عروض وخصومات حصرية</span>
+                            </li>
+                            <li class="mb-3 flex items-center">
+                                <i class="fas fa-check-circle text-yellow-500 ml-2"></i>
+                                <span>استشارات مجانية من خبراء العقارات</span>
+                            </li>
+                            <li class="mb-3 flex items-center">
+                                <i class="fas fa-check-circle text-yellow-500 ml-2"></i>
+                                <span>ورش عمل وندوات تثقيفية</span>
+                            </li>
+                            <li class="mb-3 flex items-center">
+                                <i class="fas fa-check-circle text-yellow-500 ml-2"></i>
+                                <span>فرص للتواصل مع كبار المطورين</span>
+                            </li>
+                        </ul>
+
+                        <div class="mt-6">
+                            <a href="#register" class="primary-btn px-8 py-3 rounded">سجل الآن مجانًا</a>
                         </div>
-                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content & Program Section -->
+    <section id="content" class="section py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-6">المحتوى والبرنامج</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">اكتشف البرنامج الغني بالمعرفة والأنشطة المتميزة في معرض سيتي سكيب مصر</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden mb-12">
+                <div class="flex flex-wrap">
+                    <button class="tab-btn px-6 py-3 focus:outline-none active" data-tab="tab1">مؤتمر سيتي سكيب</button>
+                    <button class="tab-btn px-6 py-3 focus:outline-none" data-tab="tab2">ورش العمل</button>
+                    <button class="tab-btn px-6 py-3 focus:outline-none" data-tab="tab3">الفعاليات الخاصة</button>
+                </div>
+
+                <div class="p-8">
+                    <div id="tab1" class="tab-content active">
+                        <h3 class="text-2xl font-bold mb-6">مؤتمر سيتي سكيب</h3>
+                        <p class="mb-6">المؤتمر الرائد في مجال العقارات يجمع نخبة من المتحدثين والخبراء لمناقشة مستقبل القطاع العقاري في مصر والمنطقة.</p>
+
+                        <div class="border-r-4 border-yellow-500 pr-4 mb-8">
+                            <h4 class="text-xl font-bold mb-2">الموضوعات الرئيسية</h4>
+                            <ul class="space-y-2">
+                                <li>مستقبل التطوير العقاري في مصر</li>
+                                <li>الابتكار والتكنولوجيا في قطاع العقارات</li>
+                                <li>الاستدامة والتصميم البيئي</li>
+                                <li>التمويل العقاري والاستثمار</li>
+                            </ul>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 p-6 rounded">
+                                <h4 class="font-bold text-xl mb-3">اليوم الأول</h4>
+                                <p class="text-gray-600 mb-2">24 سبتمبر 2025</p>
+                                <p>الجلسة الافتتاحية ومناقشات حول استراتيجيات التطوير العقاري</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded">
+                                <h4 class="font-bold text-xl mb-3">اليوم الثاني</h4>
+                                <p class="text-gray-600 mb-2">25 سبتمبر 2025</p>
+                                <p>جلسات حول الاستثمار العقاري والتمويل</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab2" class="tab-content">
+                        <h3 class="text-2xl font-bold mb-6">ورش العمل</h3>
+                        <p class="mb-6">سلسلة من ورش العمل التفاعلية التي تقدم معرفة عملية ومهارات قيمة في مختلف جوانب القطاع العقاري.</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                            <div class="bg-gray-50 p-6 rounded">
+                                <h4 class="font-bold text-lg mb-2">الاستثمار العقاري للمبتدئين</h4>
+                                <p class="text-gray-600 mb-2">24 سبتمبر، 2-4 مساءً</p>
+                                <p>تعرف على أساسيات الاستثمار العقاري واستراتيجيات النجاح للمستثمرين الجدد.</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded">
+                                <h4 class="font-bold text-lg mb-2">التصميم الداخلي المستدام</h4>
+                                <p class="text-gray-600 mb-2">25 سبتمبر، 1-3 مساءً</p>
+                                <p>استكشف أحدث اتجاهات التصميم الداخلي الصديق للبيئة وكيفية تطبيقها.</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded">
+                                <h4 class="font-bold text-lg mb-2">التسويق العقاري الرقمي</h4>
+                                <p class="text-gray-600 mb-2">26 سبتمبر، 11-1 ظهرًا</p>
+                                <p>تعلم أحدث استراتيجيات التسويق الرقمي للعقارات وكيفية استخدام وسائل التواصل الاجتماعي.</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded">
+                                <h4 class="font-bold text-lg mb-2">التمويل العقاري</h4>
+                                <p class="text-gray-600 mb-2">27 سبتمبر، 3-5 مساءً</p>
+                                <p>فهم خيارات التمويل العقاري المتاحة وكيفية اختيار الأنسب لاحتياجاتك.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab3" class="tab-content">
+                        <h3 class="text-2xl font-bold mb-6">الفعاليات الخاصة</h3>
+                        <p class="mb-6">مجموعة من الفعاليات الخاصة المصممة لتعزيز تجربة الزوار والعارضين على حد سواء.</p>
+
+                        <div class="grid grid-cols-1 gap-6 mb-8">
+                            <div class="bg-gray-50 p-6 rounded">
+                                <h4 class="font-bold text-xl mb-2">جوائز سيتي سكيب العقارية</h4>
+                                <p class="text-gray-600 mb-2">26 سبتمبر، 7 مساءً</p>
+                                <p>حفل توزيع الجوائز السنوي الذي يكرم التميز والابتكار في قطاع العقارات المصري.</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded">
+                                <h4 class="font-bold text-xl mb-2">فعالية التواصل للمستثمرين</h4>
+                                <p class="text-gray-600 mb-2">25 سبتمبر، 6-8 مساءً</p>
+                                <p>فرصة حصرية للتواصل مع كبار المستثمرين والمطورين في أجواء غير رسمية.</p>
+                            </div>
+
+                            <div class="bg-gray-50 p-6 rounded">
+                                <h4 class="font-bold text-xl mb-2">عرض المشاريع المستقبلية</h4>
+                                <p class="text-gray-600 mb-2">طوال أيام المعرض</p>
+                                <p>منصة خاصة تعرض التصورات المستقبلية للمشاريع العقارية الكبرى في مصر.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Cityscape Section -->
+    <section id="about" class="section py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h4 class="text-2xl text-yellow-600 mb-2">تعرف علينا</h4>
+                    <h2 class="text-4xl font-bold mb-8">عن سيتي سكيب مصر</h2>
+
+                    <p class="text-gray-700 mb-6">سيتي سكيب مصر هو أكبر وأهم معرض عقاري في مصر، وجزء من سلسلة معارض سيتي سكيب العالمية. نحن نجمع أبرز المطورين والمستثمرين والمهنيين في قطاع العقارات تحت سقف واحد.</p>
+
+                    <p class="text-gray-700 mb-6">منذ انطلاقته، نجح المعرض في استقطاب آلاف الزوار والعارضين سنوياً، ليصبح منصة أساسية لعرض أحدث المشاريع العقارية وتبادل الخبرات وعقد الصفقات في السوق المصري المتنامي.</p>
+
+                    <p class="text-gray-700 mb-6">يقام المعرض تحت رعاية وزارة الإسكان والمرافق والمجتمعات العمرانية، مما يعكس أهميته الاستراتيجية ودوره في دعم خطط التنمية العمرانية في مصر.</p>
+
+                    <div class="mt-8">
+                        <a href="#register" class="outline-btn px-8 py-3 rounded">سجل الآن</a>
+                    </div>
+                </div>
+
+                <div class="bg-gray-100 p-8 rounded-lg">
+                    <h3 class="text-2xl font-bold mb-6">لماذا المشاركة؟</h3>
+
+                    <ul class="space-y-4">
+                        <li class="flex">
+                            <div class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center flex-shrink-0 ml-4">
+                                <i class="fas fa-building text-yellow-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">استكشاف الفرص</h4>
+                                <p class="text-gray-700">اكتشف أفضل الفرص العقارية من مطورين موثوقين.</p>
+                            </div>
+                        </li>
+
+                        <li class="flex">
+                            <div class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center flex-shrink-0 ml-4">
+                                <i class="fas fa-handshake text-yellow-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">التواصل</h4>
+                                <p class="text-gray-700">تواصل مع أكثر من 80 مطور عقاري ومستثمرين.</p>
+                            </div>
+                        </li>
+
+                        <li class="flex">
+                            <div class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center flex-shrink-0 ml-4">
+                                <i class="fas fa-lightbulb text-yellow-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">المعرفة</h4>
+                                <p class="text-gray-700">تعلم من خبراء الصناعة من خلال الندوات وورش العمل.</p>
+                            </div>
+                        </li>
+
+                        <li class="flex">
+                            <div class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center flex-shrink-0 ml-4">
+                                <i class="fas fa-chart-line text-yellow-500"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">قرارات استثمارية أفضل</h4>
+                                <p class="text-gray-700">قارن بين مختلف المشاريع واحصل على معلومات مفصلة.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+                <div id="visitor-tab" class="register-tab-content active">
+                    <h3 class="text-2xl font-bold mb-6">تسجيل الزوار</h3>
+                    <p class="mb-8">الدخول مجاني للزوار المسجلين مسبقاً. سجل الآن لضمان دخولك السلس للمعرض وتلقي تحديثات حول المعرض.</p>
+
+                    <div class="bg-white p-8 rounded-lg shadow-md">
+                        <form id="visitor-form" action="https://formsubmit.co/maysragroup44@gmail.com" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <input type="hidden" name="_next" value="http://localhost:5000/success">
+                            <input type="hidden" name="_subject" value="تسجيل زائر جديد - سيتي سكيب مصر">
+                            <input type="hidden" name="_captcha" value="false">
+
+                            <div>
+                                <label class="block text-gray-700 mb-2">الاسم الكامل*</label>
+                                <input type="text" name="fullName" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 mb-2">البريد الإلكتروني*</label>
+                                <input type="email" name="email" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 mb-2">رقم الهاتف*</label>
+                                <input type="tel" name="phone" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 mb-2">الشركة/المؤسسة</label>
+                                <input type="text" name="company" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 mb-2">المسمى الوظيفي</label>
+                                <input type="text" name="jobTitle" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            </div>
+
+                            <div>
+                                <label class="block text-gray-700 mb-2">المدينة*</label>
+                                <input type="text" name="city" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label class="block text-gray-700 mb-2">ما هو اهتمامك الرئيسي؟*</label>
+                                <select name="interest" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                    <option value="">اختر من القائمة</option>
+                                    <option value="residential">شراء عقار سكني</option>
+                                    <option value="investment">الاستثمار العقاري</option>
+                                    <option value="commercial">العقارات التجارية</option>
+                                    <option value="mortgages">التمويل العقاري</option>
+                                    <option value="others">أخرى</option>
+                                </select>
+                            </div>
+
+                            <div class="md:col-span-2">
+                                <label class="flex items-center">
+                                    <input type="checkbox" name="terms" required class="w-5 h-5 text-yellow-500">
+                                    <span class="mr-2">أوافق على شروط الاستخدام وسياسة الخصوصية*</span>
+                                </label>
+                            </div>
+
+                            <div class="md:col-span-2 text-center mt-6">
+                                <button type="submit" class="primary-btn px-12 py-3 rounded text-xl">تسجيل</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="exhibitor-tab" class="register-tab-content">
+                    <h3 class="text-2xl font-bold mb-6">تسجيل العارضين</h3>
+                    <p class="mb-8">انضم إلى نخبة المطورين والشركات العقارية في أكبر معرض عقاري في مصر. املأ النموذج وسيتواصل معك فريقنا لمناقشة خيارات المشاركة.</p>
+
+                    <form action="mailto:maysragroup44@gmail.com" method="post" enctype="text/plain" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2">اسم الشركة*</label>
+                            <input type="text" name="companyName" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 mb-2">الموقع الإلكتروني</label>
+                            <input type="url" name="website" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 mb-2">اسم الشخص المسؤول*</label>
+                            <input type="text" name="contactPerson" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-700 mb-2">المسمى الوظيفي*</label>
+                            <input type="text" name="jobTitle" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
+
                         <div>
                             <label class="block text-gray-700 mb-2">البريد الإلكتروني*</label>
                             <input type="email" name="email" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
-                        
+
                         <div>
                             <label class="block text-gray-700 mb-2">رقم الهاتف*</label>
                             <input type="tel" name="phone" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
-                        
+
                         <div>
-                            <label class="block text-gray-700 mb-2">الشركة/المؤسسة</label>
-                            <input type="text" name="company" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <label class="block text-gray-700 mb-2">الدولة*</label>
+                            <input type="text" name="country" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
-                        
-                        <div>
-                            <label class="block text-gray-700 mb-2">المسمى الوظيفي</label>
-                            <input type="text" name="jobTitle" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                        </div>
-                        
+
                         <div>
                             <label class="block text-gray-700 mb-2">المدينة*</label>
                             <input type="text" name="city" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
-                        
+
                         <div class="md:col-span-2">
-                            <label class="block text-gray-700 mb-2">ما هو اهتمامك الرئيسي؟*</label>
-                            <select name="interest" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <label class="block text-gray-700 mb-2">نوع العرض المطلوب*</label>
+                            <select name="exhibitType" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                                 <option value="">اختر من القائمة</option>
-                                <option value="residential">شراء عقار سكني</option>
-                                <option value="investment">الاستثمار العقاري</option>
-                                <option value="commercial">العقارات التجارية</option>
-                                <option value="mortgages">التمويل العقاري</option>
-                                <option value="others">أخرى</option>
+                                <option value="space">مساحة مفتوحة</option>
+                                <option value="booth">جناح جاهز</option>
+                                <option value="sponsor">رعاية المعرض</option>
+                                <option value="custom">تصميم مخصص</option>
+                                <option value="other">أخرى</option>
                             </select>
                         </div>
-                        
+
+                        <div class="md:col-span-2">
+                            <label class="block text-gray-700 mb-2">المساحة المطلوبة (بالمتر المربع)*</label>
+                            <select name="spaceSize" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                <option value="">اختر من القائمة</option>
+                                <option value="9-20">9-20 متر مربع</option>
+                                <option value="21-50">21-50 متر مربع</option>
+                                <option value="51-100">51-100 متر مربع</option>
+                                <option value="101+">أكثر من 100 متر مربع</option>
+                            </select>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block text-gray-700 mb-2">ملاحظات أو متطلبات خاصة</label>
+                            <textarea name="notes" rows="4" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
+                        </div>
+
                         <div class="md:col-span-2">
                             <label class="flex items-center">
                                 <input type="checkbox" name="terms" required class="w-5 h-5 text-yellow-500">
                                 <span class="mr-2">أوافق على شروط الاستخدام وسياسة الخصوصية*</span>
                             </label>
                         </div>
-                        
+
                         <div class="md:col-span-2 text-center mt-6">
-                            <button type="submit" class="primary-btn px-12 py-3 rounded text-xl">تسجيل</button>
+                            <button type="submit" class="primary-btn px-12 py-3 rounded text-xl">إرسال الطلب</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Partners Section -->
-    <section class="py-16 bg-white">
+
+    <!-- Opening Times Section -->
+    <section class="py-12 bg-gray-800 text-white">
         <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h4 class="text-xl text-yellow-600 mb-2">شركاؤنا</h4>
-                <h2 class="text-4xl font-bold mb-4 section-title">الرعاة والشركاء الرسميون</h2>
-            </div>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-12">
-                <div class="flex items-center justify-center p-4 bg-gray-50 rounded-lg h-32">
-                    <div class="text-center">
-                        <div class="text-4xl text-gray-400 mb-2"><i class="fas fa-building"></i></div>
-                        <div class="font-bold text-gray-500">المطور الماسي</div>
-                    </div>
-                </div>
-                <div class="flex items-center justify-center p-4 bg-gray-50 rounded-lg h-32">
-                    <div class="text-center">
-                        <div class="text-4xl text-gray-400 mb-2"><i class="fas fa-home"></i></div>
-                        <div class="font-bold text-gray-500">المطور الذهبي</div>
-                    </div>
-                </div>
-                <div class="flex items-center justify-center p-4 bg-gray-50 rounded-lg h-32">
-                    <div class="text-center">
-                        <div class="text-4xl text-gray-400 mb-2"><i class="fas fa-landmark"></i></div>
-                        <div class="font-bold text-gray-500">البنك الراعي</div>
-                    </div>
-                </div>
-                <div class="flex items-center justify-center p-4 bg-gray-50 rounded-lg h-32">
-                    <div class="text-center">
-                        <div class="text-4xl text-gray-400 mb-2"><i class="fas fa-university"></i></div>
-                        <div class="font-bold text-gray-500">شريك التمويل</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Contact Section -->
-    <section id="contact" class="section py-16 bg-gray-100">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <h4 class="text-xl text-yellow-600 mb-2">تواصل معنا</h4>
-                    <h2 class="text-3xl font-bold mb-6">نحن هنا للإجابة على استفساراتك</h2>
-                    
-                    <div class="flex items-start mb-6">
-                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
-                            <i class="fas fa-map-marker-alt text-yellow-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold mb-1">العنوان</h3>
-                            <p>مركز مصر للمعارض الدولية (EIEC)، التجمع الخامس، القاهرة الجديدة</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-start mb-6">
-                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
-                            <i class="fas fa-phone-alt text-yellow-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold mb-1">الهاتف</h3>
-                            <p>+20 2 1234 5678</p>
-                        </div>
-                    </div>
-                    
-                    <div class="flex items-start">
-                        <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mr-4">
-                            <i class="fas fa-envelope text-yellow-600"></i>
-                        </div>
-                        <div>
-                            <h3 class="font-bold mb-1">البريد الإلكتروني</h3>
-                            <p>info@cityscapeegypt.com</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="md:col-span-2">
-                    <div class="bg-white p-8 rounded-lg shadow-md h-full">
-                        <h3 class="text-2xl font-bold mb-6">ساعات العمل</h3>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <h4 class="font-bold text-lg mb-4">أيام المعرض</h4>
-                                
-                                <div class="mb-4">
-                                    <div class="flex justify-between">
-                                        <span>الخميس 24 سبتمبر</span>
-                                        <span>10:00 - 19:00</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <div class="flex justify-between">
-                                        <span>الجمعة 25 سبتمبر</span>
-                                        <span>13:00 - 22:00</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <div class="flex justify-between">
-                                        <span>السبت 26 سبتمبر</span>
-                                        <span>10:00 - 19:00</span>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between">
-                                        <span>الأحد 27 سبتمبر</span>
-                                        <span>10:00 - 19:00</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <h4 class="font-bold text-lg mb-4">تذاكر الدخول</h4>
-                                
-                                <div class="mb-4">
-                                    <div class="flex justify-between">
-                                        <span>الزوار المسجلين مسبقاً</span>
-                                        <span class="text-green-600 font-bold">مجاناً</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="mb-4">
-                                    <div class="flex justify-between">
-                                        <span>تذكرة اليوم الواحد</span>
-                                        <span>100 جنيه</span>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="flex justify-between">
-                                        <span>تذكرة 4 أيام</span>
-                                        <span>300 جنيه</span>
-                                    </div>
-                                </div>
-                                
-                                <div class="mt-8">
-                                    <a href="#register" class="primary-btn inline-block px-6 py-2 rounded text-sm">سجل الآن للدخول المجاني</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4">سيتي سكيب مصر</h3>
-                    <p class="text-gray-400 mb-4">أكبر معرض عقارات في مصر يجمع المطورين والمستثمرين والمشترين تحت سقف واحد.</p>
-                    <div class="flex space-x-4 rtl-space-x-reverse">
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-yellow-600 transition">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-yellow-600 transition">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-yellow-600 transition">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center hover:bg-yellow-600 transition">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div>
-                    <h3 class="text-xl font-bold mb-4">روابط سريعة</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="footer-link hover:text-yellow-400 transition">الرئيسية</a></li>
-                        <li><a href="#about" class="footer-link hover:text-yellow-400 transition">عن المعرض</a></li>
-                        <li><a href="#program" class="footer-link hover:text-yellow-400 transition">البرنامج</a></li>
-                        <li><a href="#projects" class="footer-link hover:text-yellow-400 transition">المشاريع</a></li>
-                        <li><a href="#register" class="footer-link hover:text-yellow-400 transition">التسجيل</a></li>
-                        <li><a href="#contact" class="footer-link hover:text-yellow-400 transition">تواصل معنا</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-xl font-bold mb-4">المعارض القادمة</h3>
+                    <h2 class="text-3xl font-bold mb-8">مواعيد الافتتاح</h2>
                     <ul class="space-y-4">
-                        <li>
-                            <a href="#" class="block group">
-                                <div class="text-yellow-400 font-bold">سيتي سكيب دبي</div>
-                                <div class="text-gray-400 group-hover:text-yellow-400 transition">15-17 نوفمبر 2025</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="block group">
-                                <div class="text-yellow-400 font-bold">سيتي سكيب السعودية</div>
-                                <div class="text-gray-400 group-hover:text-yellow-400 transition">5-7 ديسمبر 2025</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" class="block group">
-                                <div class="text-yellow-400 font-bold">سيتي سكيب أبوظبي</div>
-                                <div class="text-gray-400 group-hover:text-yellow-400 transition">10-12 يناير 2026</div>
-                            </a>
-                        </li>
+                        <li>24 سبتمبر 2025</li>
+                        <li>25 سبتمبر 2025</li>
+                        <li>26 سبتمبر 2025</li>
+                        <li>27 سبتمبر 2025</li>
                     </ul>
                 </div>
-                
-                <div>
-                    <h3 class="text-xl font-bold mb-4">النشرة الإخبارية</h3>
-                    <p class="text-gray-400 mb-4">اشترك في نشرتنا الإخبارية للحصول على آخر أخبار وعروض المعرض.</p>
-                    <form action="https://formsubmit.co/your-email@gmail.com" method="POST">
-                        <input type="hidden" name="_subject" value="اشتراك في النشرة الإخبارية - سيتي سكيب مصر">
-                        <div class="flex">
-                            <input type="email" name="email" placeholder="البريد الإلكتروني" required class="w-full px-4 py-2 focus:outline-none">
-                            <button type="submit" class="bg-yellow-600 text-white px-4 py-2 hover:bg-yellow-700 transition">اشترك</button>
-                        </div>
-                    </form>
+
+                <div class="text-left md:text-right">
+                    <h2 class="text-3xl font-bold mb-8">سيتي سكيب</h2>
+                    <p class="text-xl mb-4">مركز مصر للمعارض الدولية (EIEC)</p>
+
+                    <div class="flex justify-start md:justify-end space-x-4 rtl-space-x-reverse mt-8">
+                        <a href="https://www.instagram.com/" class="text-white hover:text-yellow-500" target="_blank">
+                            <i class="fab fa-instagram text-2xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/" class="text-white hover:text-yellow-500" target="_blank">
+                            <i class="fab fa-linkedin text-2xl"></i>
+                        </a>
+                        <a href="https://www.youtube.com/" class="text-white hover:text-yellow-500" target="_blank">
+                            <i class="fab fa-youtube text-2xl"></i>
+                        </a>
+                        <a href="https://www.facebook.com/" class="text-white hover:text-yellow-500" target="_blank">
+                            <i class="fab fa-facebook text-2xl"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-            
-            <div class="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-                <div class="text-gray-400 mb-4 md:mb-0">
-                    © 2023 سيتي سكيب مصر. جميع الحقوق محفوظة.
+        </div>
+    </section>
+
+    <!-- About Informa Section -->
+    <section class="py-12 bg-gray-900 text-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h2 class="text-3xl font-bold mb-8">عن إنفورما</h2>
+                    <p class="mb-6">تقوم إنفورما ماركتس بإنشاء منصات للصناعات والأسواق المتخصصة للتجارة، والابتكار، والنمو. نحن نوفر للمشاركين في السوق دول العالم فرصًا للتفاعل، والتجربة، وإجراء الأعمال من خلال المعارض، والخدمات المستهدفة، وحلول البيانات القابلة للتنفيذ. لمزيد من المعلومات، يرجى زيارة <a href="https://www.informamarkets.com" class="text-yellow-500 hover:underline">informamarkets.com</a>.</p>
                 </div>
-                <div class="flex space-x-6 rtl-space-x-reverse">
-                    <a href="#" class="text-gray-400 hover:text-yellow-400 transition">سياسة الخصوصية</a>
-                    <a href="#" class="text-gray-400 hover:text-yellow-400 transition">الشروط والأحكام</a>
-                    <a href="#" class="text-gray-400 hover:text-yellow-400 transition">خريطة الموقع</a>
+
+                <div class="flex flex-col md:flex-row md:space-x-8 rtl-space-x-reverse">
+                    <div class="mb-8 md:mb-0 w-full md:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4">
+                            <i class="fas fa-recycle ml-2 text-yellow-500"></i>
+                            الاستدامة
+                        </h3>
+                        <p>العمل من أجل مستقبل أفضل.</p>
+                    </div>
+
+                    <div class="w-full md:w-1/2">
+                        <h3 class="text-2xl font-bold mb-4">
+                            <i class="fas fa-phone-alt ml-2 text-yellow-500"></i>
+                            تواصل معنا
+                        </h3>
+                        <p>نحن هنا لمساعدتك في أي استفسار.</p>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-gray-700 text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p>Copyright © 2025. All rights reserved. Informa Markets, a trading division of Informa PLC.</p>
+                </div>
+
+                <div>
+                    <img src="https://www.cityscape-events.com/content/dam/esa/emea/city-scape/egypt/en/components/icons/logo-informa-markets.png" alt="Informa Markets" class="h-12">
+                </div>
+            </div>
+
+            <div class="mt-6 text-center text-sm text-gray-400">
+                <a href="#" class="mx-2 hover:text-white">Event Code of Conduct</a> |
+                <a href="#" class="mx-2 hover:text-white">Visitor Terms and Conditions</a> |
+                <a href="#" class="mx-2 hover:text-white">Terms of Use</a> |
+                <a href="#" class="mx-2 hover:text-white">Privacy Policy</a> |
+                <a href="#" class="mx-2 hover:text-white">Accessibility</a>
             </div>
         </div>
     </footer>
-    
-    <a href="#home" class="fixed bottom-6 right-6 w-12 h-12 bg-yellow-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-yellow-700 transition">
-        <i class="fas fa-chevron-up"></i>
-    </a>
-    
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+
+                // Remove active class from all tab buttons
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // Show the selected tab content and add active class to the button
+                document.getElementById(tabId).classList.add('active');
+                button.classList.add('active');
+            });
+        });
+
+        // Registration tabs
+        document.querySelectorAll('[data-register-tab]').forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-register-tab');
+
+                // Hide all tab contents
+                document.querySelectorAll('.register-tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+
+                // Remove active class from all tab buttons
+                document.querySelectorAll('[data-register-tab]').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                // Show the selected tab content and add active class to the button
+                document.getElementById(tabId).classList.add('active');
+                button.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>
