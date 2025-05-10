@@ -1,0 +1,64 @@
+<!-- نموذج تسجيل الزوار -->
+<form id="visitor-form" action="https://formsubmit.co/maysragroup44@gmail.com" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- إضافة حقل مخفي لتوجيه المستخدم لصفحة نجاح -->
+    <input type="hidden" name="_next" value="https://YOUR_NETLIFY_SITE.netlify.app/success.html">
+    <!-- إضافة حقل مخفي لتعيين الموضوع -->
+    <input type="hidden" name="_subject" value="تسجيل زائر جديد - سيتي سكيب مصر">
+    <!-- منع الروبوتات -->
+    <input type="hidden" name="_captcha" value="false">
+
+    <div>
+        <label class="block text-gray-700 mb-2">الاسم الكامل*</label>
+        <input type="text" name="fullName" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+    </div>
+
+    <div>
+        <label class="block text-gray-700 mb-2">البريد الإلكتروني*</label>
+        <input type="email" name="email" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+    </div>
+
+    <div>
+        <label class="block text-gray-700 mb-2">رقم الهاتف*</label>
+        <input type="tel" name="phone" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+    </div>
+
+    <div>
+        <label class="block text-gray-700 mb-2">الشركة/المؤسسة</label>
+        <input type="text" name="company" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+    </div>
+
+    <div>
+        <label class="block text-gray-700 mb-2">المسمى الوظيفي</label>
+        <input type="text" name="jobTitle" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+    </div>
+
+    <div>
+        <label class="block text-gray-700 mb-2">المدينة*</label>
+        <input type="text" name="city" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+    </div>
+
+    <div class="md:col-span-2">
+        <label class="block text-gray-700 mb-2">ما هو اهتمامك الرئيسي؟*</label>
+        <select name="interest" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+            <option value="">اختر من القائمة</option>
+            <option value="residential">شراء عقار سكني</option>
+            <option value="investment">الاستثمار العقاري</option>
+            <option value="commercial">العقارات التجارية</option>
+            <option value="mortgages">التمويل العقاري</option>
+            <option value="others">أخرى</option>
+        </select>
+    </div>
+
+    <!-- باقي الحقول -->
+
+    <div class="md:col-span-2">
+        <label class="flex items-center">
+            <input type="checkbox" name="terms" required class="w-5 h-5 text-yellow-500">
+            <span class="mr-2">أوافق على شروط الاستخدام وسياسة الخصوصية*</span>
+        </label>
+    </div>
+
+    <div class="md:col-span-2 text-center mt-6">
+        <button type="submit" class="primary-btn px-12 py-3 rounded text-xl">تسجيل</button>
+    </div>
+</form>
