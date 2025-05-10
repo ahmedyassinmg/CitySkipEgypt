@@ -128,9 +128,61 @@
             background-color: var(--primary-color);
             color: white;
         }
+
+        #success-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-align: center;
+        }
+
+        #success-message.show {
+            display: block;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        #overlay.show {
+            display: block;
+        }
+
+        .register-tab-content {
+            display: none;
+        }
+
+        .register-tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-white">
+    <!-- Success Message Pop-up -->
+    <div id="overlay"></div>
+    <div id="success-message">
+        <div class="w-20 h-20 bg-green-100 rounded-full mx-auto flex items-center justify-center mb-6">
+            <i class="fas fa-check text-green-500 text-4xl"></i>
+        </div>
+        <h1 class="text-3xl font-bold mb-4">تم التسجيل بنجاح!</h1>
+        <p class="text-gray-600 mb-8">شكراً لتسجيلك في معرض سيتي سكيب مصر. سنتواصل معك قريباً بكل التفاصيل.</p>
+        <button onclick="closeSuccessMessage()" class="bg-yellow-500 text-white px-6 py-3 rounded hover:bg-yellow-600 transition">العودة للصفحة الرئيسية</button>
+    </div>
+
     <!-- Top Bar -->
     <div class="bg-gray-700 text-white py-2 px-4 flex justify-end items-center">
         <div>informa</div>
@@ -767,148 +819,188 @@
         </div>
     </section>
 
+    <!-- Registration Section -->
+    <section id="register" class="section py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-6">سجل الآن</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">احجز مكانك في أكبر حدث عقاري في مصر واستعد لتجربة استثنائية</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-sm">
+                <div class="flex flex-wrap mb-8">
+                    <button class="tab-btn px-8 py-3 focus:outline-none active" data-register-tab="visitor-tab">تسجيل الزوار</button>
+                    <button class="tab-btn px-8 py-3 focus:outline-none" data-register-tab="exhibitor-tab">تسجيل العارضين</button>
+                </div>
+
                 <div id="visitor-tab" class="register-tab-content active">
                     <h3 class="text-2xl font-bold mb-6">تسجيل الزوار</h3>
                     <p class="mb-8">الدخول مجاني للزوار المسجلين مسبقاً. سجل الآن لضمان دخولك السلس للمعرض وتلقي تحديثات حول المعرض.</p>
 
-                    <div class="bg-white p-8 rounded-lg shadow-md">
-                        <form id="visitor-form" action="https://formsubmit.co/maysragroup44@gmail.com" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input type="hidden" name="_next" value="http://localhost:5000/success">
-                            <input type="hidden" name="_subject" value="تسجيل زائر جديد - سيتي سكيب مصر">
-                            <input type="hidden" name="_captcha" value="false">
+                    <!-- نموذج تسجيل الزوار باستخدام FormSubmit -->
+                    <form id="visitor-form" action="https://formsubmit.co/maysragroup44@gmail.com" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6" onsubmit="showSuccessMessage(event)">
+                        <!-- حقول مخفية لضبط إعدادات FormSubmit -->
+                        <input type="hidden" name="_subject" value="تسجيل زائر جديد - سيتي سكيب مصر">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="box">
 
-                            <div>
-                                <label class="block text-gray-700 mb-2">الاسم الكامل*</label>
-                                <input type="text" name="fullName" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                            </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">الاسم الكامل*</label>
+                            <input type="text" name="الاسم الكامل" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
 
-                            <div>
-                                <label class="block text-gray-700 mb-2">البريد الإلكتروني*</label>
-                                <input type="email" name="email" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                            </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">البريد الإلكتروني*</label>
+                            <input type="email" name="البريد الإلكتروني" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
 
-                            <div>
-                                <label class="block text-gray-700 mb-2">رقم الهاتف*</label>
-                                <input type="tel" name="phone" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                            </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">رقم الهاتف*</label>
+                            <input type="tel" name="رقم الهاتف" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
 
-                            <div>
-                                <label class="block text-gray-700 mb-2">الشركة/المؤسسة</label>
-                                <input type="text" name="company" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                            </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">الشركة/المؤسسة</label>
+                            <input type="text" name="الشركة" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
 
-                            <div>
-                                <label class="block text-gray-700 mb-2">المسمى الوظيفي</label>
-                                <input type="text" name="jobTitle" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                            </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">المسمى الوظيفي</label>
+                            <input type="text" name="المسمى الوظيفي" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
 
-                            <div>
-                                <label class="block text-gray-700 mb-2">المدينة*</label>
-                                <input type="text" name="city" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                            </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2">المدينة*</label>
+                            <input type="text" name="المدينة" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                        </div>
 
-                            <div class="md:col-span-2">
-                                <label class="block text-gray-700 mb-2">ما هو اهتمامك الرئيسي؟*</label>
-                                <select name="interest" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                                    <option value="">اختر من القائمة</option>
-                                    <option value="residential">شراء عقار سكني</option>
-                                    <option value="investment">الاستثمار العقاري</option>
-                                    <option value="commercial">العقارات التجارية</option>
-                                    <option value="mortgages">التمويل العقاري</option>
-                                    <option value="others">أخرى</option>
-                                </select>
-                            </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-gray-700 mb-2">ما هو اهتمامك الرئيسي؟*</label>
+                            <select name="الاهتمام الرئيسي" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                <option value="">اختر من القائمة</option>
+                                <option value="شراء عقار سكني">شراء عقار سكني</option>
+                                <option value="الاستثمار العقاري">الاستثمار العقاري</option>
+                                <option value="العقارات التجارية">العقارات التجارية</option>
+                                <option value="التمويل العقاري">التمويل العقاري</option>
+                                <option value="أخرى">أخرى</option>
+                            </select>
+                        </div>
 
-                            <div class="md:col-span-2">
-                                <label class="flex items-center">
-                                    <input type="checkbox" name="terms" required class="w-5 h-5 text-yellow-500">
-                                    <span class="mr-2">أوافق على شروط الاستخدام وسياسة الخصوصية*</span>
-                                </label>
-                            </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-gray-700 mb-2">كيف سمعت عنا؟</label>
+                            <select name="كيف سمعت عنا" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                <option value="">اختر من القائمة</option>
+                                <option value="وسائل التواصل الاجتماعي">وسائل التواصل الاجتماعي</option>
+                                <option value="البريد الإلكتروني">البريد الإلكتروني</option>
+                                <option value="الموقع الإلكتروني">الموقع الإلكتروني</option>
+                                <option value="توصية من صديق">توصية من صديق</option>
+                                <option value="إعلان">إعلان</option>
+                                <option value="أخرى">أخرى</option>
+                            </select>
+                        </div>
 
-                            <div class="md:col-span-2 text-center mt-6">
-                                <button type="submit" class="primary-btn px-12 py-3 rounded text-xl">تسجيل</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="md:col-span-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="النشرة الإخبارية" value="نعم" class="w-5 h-5 text-yellow-500">
+                                <span class="mr-2">أرغب في تلقي الأخبار والتحديثات عن معرض سيتي سكيب والفعاليات المستقبلية</span>
+                            </label>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" name="الموافقة على الشروط" required class="w-5 h-5 text-yellow-500">
+                                <span class="mr-2">أوافق على شروط الاستخدام وسياسة الخصوصية*</span>
+                            </label>
+                        </div>
+
+                        <div class="md:col-span-2 text-center mt-6">
+                            <button type="submit" class="primary-btn px-12 py-3 rounded text-xl">تسجيل</button>
+                        </div>
+                    </form>
                 </div>
 
                 <div id="exhibitor-tab" class="register-tab-content">
                     <h3 class="text-2xl font-bold mb-6">تسجيل العارضين</h3>
                     <p class="mb-8">انضم إلى نخبة المطورين والشركات العقارية في أكبر معرض عقاري في مصر. املأ النموذج وسيتواصل معك فريقنا لمناقشة خيارات المشاركة.</p>
 
-                    <form action="mailto:maysragroup44@gmail.com" method="post" enctype="text/plain" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- نموذج تسجيل العارضين باستخدام FormSubmit -->
+                    <form id="exhibitor-form" action="https://formsubmit.co/maysragroup44@gmail.com" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6" onsubmit="showSuccessMessage(event)">
+                        <!-- حقول مخفية لضبط إعدادات FormSubmit -->
+                        <input type="hidden" name="_subject" value="تسجيل عارض جديد - سيتي سكيب مصر">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="box">
+
                         <div>
                             <label class="block text-gray-700 mb-2">اسم الشركة*</label>
-                            <input type="text" name="companyName" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <input type="text" name="اسم الشركة" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
 
                         <div>
                             <label class="block text-gray-700 mb-2">الموقع الإلكتروني</label>
-                            <input type="url" name="website" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <input type="url" name="الموقع الإلكتروني" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
 
                         <div>
                             <label class="block text-gray-700 mb-2">اسم الشخص المسؤول*</label>
-                            <input type="text" name="contactPerson" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <input type="text" name="اسم الشخص المسؤول" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
 
                         <div>
                             <label class="block text-gray-700 mb-2">المسمى الوظيفي*</label>
-                            <input type="text" name="jobTitle" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <input type="text" name="المسمى الوظيفي" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
 
                         <div>
                             <label class="block text-gray-700 mb-2">البريد الإلكتروني*</label>
-                            <input type="email" name="email" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <input type="email" name="البريد الإلكتروني" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
 
                         <div>
                             <label class="block text-gray-700 mb-2">رقم الهاتف*</label>
-                            <input type="tel" name="phone" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <input type="tel" name="رقم الهاتف" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
 
                         <div>
                             <label class="block text-gray-700 mb-2">الدولة*</label>
-                            <input type="text" name="country" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <input type="text" name="الدولة" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
 
                         <div>
                             <label class="block text-gray-700 mb-2">المدينة*</label>
-                            <input type="text" name="city" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <input type="text" name="المدينة" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         </div>
 
                         <div class="md:col-span-2">
                             <label class="block text-gray-700 mb-2">نوع العرض المطلوب*</label>
-                            <select name="exhibitType" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <select name="نوع العرض المطلوب" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                                 <option value="">اختر من القائمة</option>
-                                <option value="space">مساحة مفتوحة</option>
-                                <option value="booth">جناح جاهز</option>
-                                <option value="sponsor">رعاية المعرض</option>
-                                <option value="custom">تصميم مخصص</option>
-                                <option value="other">أخرى</option>
+                                <option value="مساحة مفتوحة">مساحة مفتوحة</option>
+                                <option value="جناح جاهز">جناح جاهز</option>
+                                <option value="رعاية المعرض">رعاية المعرض</option>
+                                <option value="تصميم مخصص">تصميم مخصص</option>
+                                <option value="أخرى">أخرى</option>
                             </select>
                         </div>
 
                         <div class="md:col-span-2">
                             <label class="block text-gray-700 mb-2">المساحة المطلوبة (بالمتر المربع)*</label>
-                            <select name="spaceSize" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            <select name="المساحة المطلوبة" required class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500">
                                 <option value="">اختر من القائمة</option>
-                                <option value="9-20">9-20 متر مربع</option>
-                                <option value="21-50">21-50 متر مربع</option>
-                                <option value="51-100">51-100 متر مربع</option>
-                                <option value="101+">أكثر من 100 متر مربع</option>
+                                <option value="9-20 متر مربع">9-20 متر مربع</option>
+                                <option value="21-50 متر مربع">21-50 متر مربع</option>
+                                <option value="51-100 متر مربع">51-100 متر مربع</option>
+                                <option value="أكثر من 100 متر مربع">أكثر من 100 متر مربع</option>
                             </select>
                         </div>
 
                         <div class="md:col-span-2">
                             <label class="block text-gray-700 mb-2">ملاحظات أو متطلبات خاصة</label>
-                            <textarea name="notes" rows="4" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
+                            <textarea name="ملاحظات" rows="4" class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
                         </div>
 
                         <div class="md:col-span-2">
                             <label class="flex items-center">
-                                <input type="checkbox" name="terms" required class="w-5 h-5 text-yellow-500">
+                                <input type="checkbox" name="الموافقة على الشروط" required class="w-5 h-5 text-yellow-500">
                                 <span class="mr-2">أوافق على شروط الاستخدام وسياسة الخصوصية*</span>
                             </label>
                         </div>
@@ -1054,6 +1146,37 @@
                 button.classList.add('active');
             });
         });
+
+        // Success message functionality
+        function showSuccessMessage(event) {
+            event.preventDefault(); // منع السلوك الافتراضي للنموذج
+
+            // إرسال النموذج باستخدام AJAX
+            const formData = new FormData(event.target);
+
+            fetch(event.target.action, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                // إظهار رسالة النجاح
+                document.getElementById('overlay').classList.add('show');
+                document.getElementById('success-message').classList.add('show');
+
+                // إعادة تعيين النموذج
+                event.target.reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('حدث خطأ أثناء إرسال النموذج. يرجى المحاولة مرة أخرى.');
+            });
+        }
+
+        // إغلاق رسالة النجاح
+        function closeSuccessMessage() {
+            document.getElementById('overlay').classList.remove('show');
+            document.getElementById('success-message').classList.remove('show');
+        }
     </script>
 </body>
 </html>
